@@ -6,7 +6,7 @@ const Header = () => {
         <header>
             <nav className="flex items-center justify-between flex-wrap bg-indigo-200 p-6">
                 <div className="flex items-center flex-no-shrink text-white mr-6">
-                    <span className="font-semibold text-xl tracking-tight text-indigo-900">NevisCRM</span>
+                    <span className="font-semibold text-xl tracking-tight text-indigo-900">CRM</span>
                 </div>
                 <div className="block lg:hidden">
                     <button
@@ -26,7 +26,7 @@ const Header = () => {
                     </div>
                     <div>
                         <a href="#"
-                           className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-400 hover:bg-white mt-4 lg:mt-0">Download</a>
+                           className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-400 hover:bg-white mt-4 lg:mt-0">Log In</a>
                     </div>
                 </div>
             </nav>

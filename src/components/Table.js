@@ -3,14 +3,15 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSort} from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import {Form} from "react-bootstrap";
-import {reset} from "colorette";
 import TableItem from "./TableItem";
+import {useForm} from "react-hook-form";
+
 
 
 const Table = () => {
     const [contacts, setContacts] = useState([])
-
     const [showModal, setShowModal] = React.useState(false);
+    const [directionSort, setDirectionSort] = useState(true)
 
     const onSubmit = data => {
         addUser(data)
@@ -20,10 +21,12 @@ const Table = () => {
 
     const [user, setUser] = useState({})
 
+    const {register, handleSubmit, formState: {errors}, reset} = useForm();
+
     const handleChange = (e) => {
         setUser({...user, [e.target.name]: e.target.value})
     }
-    console.log(user)
+
     useEffect(() => {
         axios('https://605c24c46d85de00170d9532.mockapi.io/users')
             .then(rec => {
@@ -50,30 +53,59 @@ const Table = () => {
 
     const sortData = (field) => {
         const copyData = contacts.concat()
-        const sortData = copyData.sort(
-            (a, b) => a[field] > b[field] ? 1 : -1
+        let sortData
+        if (directionSort) {
+            sortData = copyData.sort(
+                (a, b) => {
+                    return a[field] < b[field] ? 1 : -1
+                }
+            )
+        }
+        sortData = copyData.reverse(
+            (a, b) => {
+                return a[field] < b[field] ? 1 : -1
+            }
         )
         setContacts(sortData)
+        setDirectionSort(!directionSort)
+    }
+    const sortStrings = (field) => {
+        const copyData = contacts.concat()
+        let sortData
+        if (directionSort) {
+            sortData = copyData.sort(
+                (a, b) => {
+                    return +a[field] < +b[field] ? 1 : -1
+                }
+            )
+        }
+        sortData = copyData.reverse(
+            (a, b) => {
+                return +a[field] < +b[field] ? 1 : -1
+            }
+        )
+        setContacts(sortData)
+        setDirectionSort(!directionSort)
     }
 
     return (
         <div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-scroll">
                 <div
                     className="min-w-screen min-h-screen bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
                     <div className="w-full lg:w-5/6">
                         <div className="bg-white shadow-md rounded my-6 text-right">
-                            <table className="min-w-max w-full table-auto">
+                            <table className="min-w-max w-full table-auto ">
                                 <thead>
                                 <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                    <th className="py-3 px-6 text-left">Name <FontAwesomeIcon icon={faSort} onClick={() => {sortData('name')}}/></th>
+                                    <th className="py-3 px-6 text-left">Name <FontAwesomeIcon icon={faSort} onClick={() => sortData('name')} /></th>
                                     <th className="py-3 px-6 text-left">Number</th>
-                                    <th className="py-3 px-6 text-center">Contract<FontAwesomeIcon icon={faSort} onClick={() => {sortData('amount')}}/></th>
-                                    <th className="py-3 px-6 text-center">Paid <FontAwesomeIcon icon={faSort} onClick={() => {sortData('paid')}}/></th>
+                                    <th className="py-3 px-6 text-center">Contract<FontAwesomeIcon icon={faSort} onClick={() => sortStrings('amount')}/></th>
+                                    <th className="py-3 px-6 text-center">Paid <FontAwesomeIcon icon={faSort} onClick={() => sortStrings('paid')}/></th>
                                     <th className="py-3 px-6 text-center">Notebook</th>
                                     <th className="py-3 px-6 text-center">Group</th>
                                     <th className="py-3 px-6 text-center">Comments</th>
-                                    <th className="py-3 px-6 text-center">Status <FontAwesomeIcon icon={faSort} onClick={() => {sortData('status')}}/></th>
+                                    <th className="py-3 px-6 text-center">Status <FontAwesomeIcon icon={faSort} onClick={() => sortData('status')}/></th>
                                     <th className="py-3 px-6 text-center">Actions</th>
                                 </tr>
                                 </thead>
@@ -99,7 +131,6 @@ const Table = () => {
                                         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                                     >
                                         <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                                            {/*content*/}
                                             <div
                                                 className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                                 <div className="relative p-6 flex-auto">
@@ -165,34 +196,34 @@ const Table = () => {
                                                             <p className='font-semibold text-sm text-gray-600 pb-1 text-left'>Group</p>
                                                             <Form.Control size="sm" as="select"
                                                                           name='group'
-                                                                          className='border rounded-lg px-3 py-2 mt-1 text-sm w-full focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative p-1 mb-5 w-full h-10'
+                                                                          className='border rounded-lg bg-white text-gray-600 px-3 py-2 mt-1 text-sm w-full focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative p-1 mb-5 w-full h-10'
                                                                           value={user.group}
                                                                           onChange={handleChange}
                                                             >
                                                                 <option value="" disabled selected>sort by</option>
-                                                                <option value="morning">Morning</option>
-                                                                <option value="day">Day</option>
-                                                                <option value="evening">Evening</option>
+                                                                <option value="Morning">Morning</option>
+                                                                <option value="Day">Day</option>
+                                                                <option value="Evening">Evening</option>
                                                             </Form.Control>
                                                         </div>
                                                         <div>
                                                             <p className='font-semibold text-sm text-gray-600 pb-1 text-left'>Status</p>
                                                             <Form.Control size="sm" as="select"
                                                                           name='status'
-                                                                          className='border rounded-lg px-3 py-2 mt-1 text-sm w-full focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative p-1 mb-5 w-full h-10'
+                                                                          className='border bg-white text-gray-600 rounded-lg px-3 py-2 mt-1 text-sm w-full focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative p-1 mb-5 w-full h-10'
                                                                           value={user.status}
                                                                           onChange={handleChange}
                                                             >
                                                                 <option value="" disabled selected>sort by</option>
-                                                                <option value="active">Active</option>
-                                                                <option value="completed">Completed</option>
-                                                                <option value="pending">Pending</option>
+                                                                <option value="Active">Active</option>
+                                                                <option value="Completed">Completed</option>
+                                                                <option value="Pending">Pending</option>
                                                             </Form.Control>
                                                         </div>
                                                         <div>
                                                             <p className='font-semibold text-sm text-gray-600 pb-1 text-left'>Gender</p>
                                                             <Form.Control size="sm" as="select"
-                                                                          className='border rounded-lg px-3 py-2 mt-1 text-sm w-full focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative p-1 mb-5 w-full h-100'
+                                                                          className='border bg-white text-gray-600 rounded-lg px-3 py-2 mt-1 text-sm w-full focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative p-1 mb-5 w-full h-100'
                                                                           name='gender'
                                                                           value={user.gender}
                                                                           onChange={handleChange}
@@ -234,7 +265,7 @@ const Table = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                                    <div className="opacity-25 fixed inset-0 z-40 bg-black"> </div>
                                 </>
                             ) : null}
                         </div>

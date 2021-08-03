@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import EditForm from "./EditForm";
+import {faPhoneAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const TableItem = ({rec, deleteUser ,updateUser}) => {
+const TableItem = ({rec, deleteUser ,updateUser , student}) => {
     const [editForm, setEditForm] = useState(false)
     return (
-        <>
             <tr className="border-b border-gray-200 hover:bg-gray-100">
                 <td className="py-3 px-6 text-left whitespace-nowrap">
                     <div className="flex items-center">
@@ -16,7 +17,7 @@ const TableItem = ({rec, deleteUser ,updateUser}) => {
                 <td className="py-3 px-6 text-left">
                     <div className="flex items-center">
                         <div className="mr-2">
-                            {rec.phone}
+                            <FontAwesomeIcon icon={faPhoneAlt}/>{rec.phone}
                         </div>
                     </div>
                 </td>
@@ -42,14 +43,14 @@ const TableItem = ({rec, deleteUser ,updateUser}) => {
                 </td>
                 <td className="py-3 px-6 text-center">
                     <div className="flex items-center justify-center">
-                        {rec.comment}
+                        {rec.comments}
                     </div>
                 </td>
                 <td className="py-3 px-6 text-center">
                                         <span
-                                            className={`${rec.status === 'Active' ? 'bg-indigo-200'
+                                            className={`${rec.status === 'Active' ? 'bg-pink-200'
                                                 : rec.status === 'Pending' ? 'bg-yellow-200'
-                                                    : rec.status === 'Completed' ? 'bg-green-200' : 'bg-indigo-200'} text-black py-1 px-3 rounded-full text-xs`}>{rec.status}</span>
+                                                    : rec.status === 'Completed' ? 'bg-green-200' : 'bg-pink-200'} text-black py-1 px-3 rounded-full text-xs`}>{rec.status}</span>
                 </td>
                 <td className="py-3 px-6 text-center">
                     <div className="flex item-center justify-center">
@@ -77,11 +78,10 @@ const TableItem = ({rec, deleteUser ,updateUser}) => {
                             </svg>
                         </div>
                     </div>
+                    {editForm &&
+                    <EditForm updateUser={updateUser} rec={rec} setEditForm={setEditForm}/>}
                 </td>
             </tr>
-            {editForm &&
-            <EditForm updateUser={updateUser} rec={rec} setEditForm={setEditForm}/>}
-        </>
     );
 };
 

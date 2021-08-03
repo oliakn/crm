@@ -1,9 +1,11 @@
 import React from 'react';
 import {Form} from "react-bootstrap";
-import {reset} from "colorette";
+import { useForm } from "react-hook-form";
 
 
 const AddForm = ({addUser, setShowModal, user, handleChange}) => {
+
+    const { register, handleSubmit , formState: {errors}, reset} = useForm();
 
     const onSubmit = data => {
         addUser(data)

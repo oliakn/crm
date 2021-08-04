@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Form} from "react-bootstrap";
 import { useForm } from "react-hook-form"
 
-const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
-    const { register, handleSubmit , formState: {errors}, reset} = useForm();
+const EditForm = ({updateUser, rec, setEditForm, handleChange}) => {
+    const { register, formState: {errors}, reset} = useForm()
 
     const onSubmit = () => {
         updateUser(rec.id, newName, newPhone, newAmount, newPaid, newNotebook, newGroup, newComment, newStatus)
@@ -18,9 +18,10 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
     const [newGroup, setNewGroup] = useState(rec.group)
     const [newComment, setNewComment] = useState(rec.comment)
     const [newStatus, setNewStatus] = useState(rec.status)
+    console.log(newName)
+    console.log(newComment)
     return (
-        <>
-            <form className='p-3' onSubmit={handleSubmit(onSubmit)}>
+            <form className='p-3'>
                 <div
                     className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                     <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -37,7 +38,6 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
                                             type='text'
                                             className="border rounded-lg px-3 py-2 mt-1 text-sm w-full"
                                             placeholder='enter your name'
-                                            {...register("name", { required: true })}
                                         />
                                         {errors.name && <span className='text-red-500'>Enter your name</span>}
                                     </div>
@@ -51,7 +51,6 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
                                             type="text"
                                             className="border rounded-lg px-3 py-2 mt-1 text-sm w-full"
                                             placeholder='enter your phone'
-                                            {...register("phone", { required: true })}
                                         />
                                         {errors.name && <span className='text-red-500'>Enter your phone</span>}
                                     </div>
@@ -66,7 +65,6 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
                                             onChange={(e) => setNewAmount(e.target.value)}
                                             type="text"
                                             className="border rounded-lg px-3 py-2 mt-1 text-sm w-full"
-                                            {...register("amount", { required: true })}
                                         />
                                         {errors.name && <span className='text-red-500'>Enter your contract amount</span>}
                                     </div>
@@ -78,7 +76,6 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
                                             onChange={(e) => setNewPaid(e.target.value)}
                                             type="text"
                                             className="border rounded-lg px-3 py-2 mt-1 text-sm w-full"
-                                            {...register("paid", { required: true })}
                                         />
                                         {errors.name && <span className='text-red-500'>Enter your paid</span>}
                                     </div>
@@ -91,7 +88,6 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
                                         onChange={(e) => setNewNotebook(e.target.value)}
                                         type="text"
                                         className="border rounded-lg px-3 py-2 mt-1 text-sm w-full"
-                                        {...register("notebook", { required: true })}
                                     />
                                 </div>
                                 <div className="grid lg:grid-cols-3 gap-3 mb-5">
@@ -101,8 +97,7 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
                                                       name='group'
                                                       className='border rounded-lg px-3 py-2 mt-1 text-sm w-full focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative p-1 mb-5 w-full h-10'
                                                       defaultValue={newGroup}
-                                                      onChange={(e) => setNewGroup(e.target.value)}                                            {...register("paid", { required: true })}
-                                                      {...register("group")}
+                                                      onChange={(e) => setNewGroup(e.target.value)}
                                         >
 
                                             <option defaultValue="Morning">Morning</option>
@@ -117,7 +112,6 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
                                                       className='border rounded-lg px-3 py-2 mt-1 text-sm w-full focus-within:border-blue-500 focus-within:text-blue-500 transition-all duration-500 relative p-1 mb-5 w-full h-10'
                                                       defaultValue={newStatus}
                                                       onChange={(e) => setNewStatus(e.target.value)}
-                                                      {...register("status")}
                                         >
                                             <option defaultValue="Active">Active</option>
                                             <option defaultValue="Completed">Completed</option>
@@ -131,7 +125,6 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
                                                       name='gender'
                                                       defaultValue={rec.gender}
                                                       onChange={handleChange}
-                                                      {...register("gender")}
                                         >
                                             <option defaultValue="male">Male</option>
                                             <option defaultValue="female">Female</option>
@@ -159,6 +152,7 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
                                     Close
                                 </button>
                                 <button
+                                    onClick={onSubmit}
                                     className="bg-green-400 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                     type="button"
                                 >
@@ -170,7 +164,6 @@ const EditForm = ({rec, updateUser, setEditForm, handleChange}) => {
                 </div>
                 <div className="opacity-25 fixed inset-0 z-40 bg-black"> </div>
             </form>
-        </>
     );
 };
 

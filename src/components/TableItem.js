@@ -3,8 +3,9 @@ import EditForm from "./EditForm";
 import {faPhoneAlt} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const TableItem = ({rec, deleteUser ,updateUser , student}) => {
+const TableItem = ({updateUser, rec, deleteUser, student}) => {
     const [editForm, setEditForm] = useState(false)
+    console.log(rec)
     return (
             <tr className="border-b border-gray-200 hover:bg-gray-100">
                 <td className="py-3 px-6 text-left whitespace-nowrap">
@@ -43,7 +44,7 @@ const TableItem = ({rec, deleteUser ,updateUser , student}) => {
                 </td>
                 <td className="py-3 px-6 text-center">
                     <div className="flex items-center justify-center">
-                        {rec.comments}
+                        {rec.comment}
                     </div>
                 </td>
                 <td className="py-3 px-6 text-center">

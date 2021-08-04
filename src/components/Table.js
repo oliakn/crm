@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faSort} from '@fortawesome/free-solid-svg-icons'
+import {faEdit, faSort} from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import {Form} from "react-bootstrap";
 import TableItem from "./TableItem";
@@ -10,7 +10,7 @@ import {useForm} from "react-hook-form";
 
 const Table = () => {
     const [contacts, setContacts] = useState([])
-    const [showModal, setShowModal] = React.useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [directionSort, setDirectionSort] = useState(true)
 
     const onSubmit = data => {
@@ -47,10 +47,10 @@ const Table = () => {
     }
 
     const updateUser = (id, newName, newPhone, newAmount, newPaid, newNotebook, newGroup, newComment, newStatus) => {
+        console.log(newName)
         axios.put(`https://605c24c46d85de00170d9532.mockapi.io/users/${id}`, {name: newName, phone: newPhone, amount: newAmount, paid: newPaid, notebook: newNotebook, group: newGroup, comment: newComment, status: newStatus})
             .then(({data}) => setContacts(contacts.map(el => el.id === id ? data : el)))
     }
-
     const sortData = (field) => {
         const copyData = contacts.concat()
         let sortData

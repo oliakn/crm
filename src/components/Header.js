@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 
 const Header = () => {
     return (
@@ -25,8 +25,7 @@ const Header = () => {
                         </NavLink>
                     </div>
                     <div>
-                        <a href="#"
-                           className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-400 hover:bg-white mt-4 lg:mt-0">Log In</a>
+                        <Link className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-400 hover:bg-white mt-4 lg:mt-0">Log In</Link>
                     </div>
                 </div>
             </nav>

@@ -21,7 +21,7 @@ const Table = () => {
 
     const [user, setUser] = useState({})
 
-    const {register, handleSubmit, formState: {errors}, reset} = useForm();
+    const {reset} = useForm();
 
     const handleChange = (e) => {
         setUser({...user, [e.target.name]: e.target.value})

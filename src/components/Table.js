@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faEdit, faSort} from '@fortawesome/free-solid-svg-icons'
+import {faSort} from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import {Form} from "react-bootstrap";
 import TableItem from "./TableItem";

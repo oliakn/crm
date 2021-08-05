@@ -3,7 +3,7 @@ import {Form} from "react-bootstrap";
 import { useForm } from "react-hook-form"
 
 const EditForm = ({updateUser, rec, setEditForm, handleChange}) => {
-    const { register, formState: {errors}, reset} = useForm()
+    const { formState: {errors}, reset} = useForm()
 
     const onSubmit = () => {
         updateUser(rec.id, newName, newPhone, newAmount, newPaid, newNotebook, newGroup, newComment, newStatus)
